@@ -11,7 +11,7 @@ LLM_MODEL = "gemini-2.5-flash-preview-05-20"
 
 # create instance of chromadb client
 chromadb_client = chromadb.PersistentClient("./chroma.db")
-chromadb_collection = chromadb_client.get_or_create_collection("linghuchong")
+chromadb_collection = chromadb_client.get_or_create_collection("TRS-CHROMA-DB")
 
 def embed(text: str, store: bool) -> list[float]:
     result = google_client.models.embed_content(
@@ -47,24 +47,25 @@ def query_db(question: str) -> list[str]:
 
 
 if __name__ == '__main__':
-    # chunks = chunker.get_chunks()
+    chunks = chunker.get_chunks()
+    print(f"Total chunks: {(chunks)}")
     # print(embed(chunks[0], True))
     # create_db()
-    question = "what is the professional way to asnswer the phone？"
-    chunks = query_db(question)
-    # for c in chunks:
-    #     print(c)
-    #     print("--------------")
-    prompt = "Please answer user's question according to context\n"
-    prompt += f"Question: {question}\n"
-    prompt += "Context:\n"
-    for c in chunks:
-        prompt += f"{c}\n"
-        prompt += "-------------\n"
+
+
+    # question = "what is the professional way to asnswer the phone？"
+    # chunks = query_db(question)
+    # prompt = "Please answer user's question according to context\n"
+    # prompt += f"Question: {question}\n"
+    # prompt += "Context:\n"
     
-    result = google_client.models.generate_content(
-        model=LLM_MODEL,
-        contents=prompt
-    )
-    print(result)
+    # for c in chunks:
+    #     prompt += f"{c}\n"
+    #     prompt += "-------------\n"
+    
+    # result = google_client.models.generate_content(
+    #     model=LLM_MODEL,
+    #     contents=prompt
+    # )
+    # print(result)
 
